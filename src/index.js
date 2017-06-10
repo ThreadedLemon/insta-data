@@ -27,8 +27,7 @@ app.get('/', (req, res) => { res.send('\n 👋 🌍 Test \n') })
 app.post('/commands/unfollow-list', (req, res) => {
   let payload = req.body
 
-  console.log(req);
-  console.log(res);
+  console.log(payload);
 
   if (!payload || payload.token !== config('SLACK_TOKEN')) {
     let err = '✋  Insta—what? An invalid slash token was provided\n' +
