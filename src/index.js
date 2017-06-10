@@ -8,7 +8,7 @@ const _ = require('lodash');
 const config = require('./config');
 const commands = require('./commands');
 const helpCommand = require('./commands/help');
-const phantomjs = require('phantomjs-prebuilt')
+const Horseman = require('node-horseman');
 
 let bot = require('./bot');
 
@@ -24,14 +24,10 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => { 
-  var page = require('webpage').create();
-  page.open('http://example.com', function(status) {
-    console.log("Status: " + status);
-    if(status === "success") {
-      
-    }
-    phantomjs.exit();
-  });
+  
+   console.log(req.protocol + '://' + req.get('host') + req.originalUrl);
+  
+
   res.send('\n 👋 🌍 Test \n') 
 })
 
@@ -39,6 +35,15 @@ app.post('/commands/unfollow-list', (req, res) => {
   let payload = req.body;
 
   console.log(payload);
+
+  const horseman = new Horseman();
+
+  horseman
+      .open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
+      .value('input[name="username"]', 'integrationuser')
+      .value('input[name="password"]', 'Ub5pzn79Ej')
+      .click('input[value="Log in"]')
+      .close();
 
   if (!payload || payload.token !== config('SLACK_TOKEN')) {
     let err = '✋  Insta—what? An invalid slash token was provided\n' +
