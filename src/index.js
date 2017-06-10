@@ -22,7 +22,11 @@ if (config('PROXY_URI')) {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.get('/', (req, res) => { res.send('\n 👋 🌍 Test \n') })
+app.get('/', (req, res) => { 
+  console.log(req);
+  console.log(res);
+  res.send('\n 👋 🌍 Test \n') 
+})
 
 app.post('/commands/unfollow-list', (req, res) => {
   let payload = req.body;
@@ -42,11 +46,6 @@ app.post('/commands/unfollow-list', (req, res) => {
   }, helpCommand);
 
   cmd.handler(payload, res);
-});
-
-app.get('/#access_token', (req, res) => {
-  console.log(req);
-  console.log(res);
 });
 
 app.listen(config('PORT'), (err) => {
