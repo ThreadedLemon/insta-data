@@ -51,4 +51,5 @@ app.listen(config('PORT'), (err) => {
   if (err) throw err
 
   console.log(`\n📷  Insta-Data LIVES on PORT ${config('PORT')} 📷`);
+  
 });
