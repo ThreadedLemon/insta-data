@@ -43,6 +43,8 @@ app.post('/commands/unfollow-list', (req, res) => {
       .value('input[name="username"]', 'integrationuser')
       .value('input[name="password"]', 'Ub5pzn79Ej')
       .click('input[value="Log in"]')
+      .waitForNextPage()
+      .log('yes')
       .close();
 
   if (!payload || payload.token !== config('SLACK_TOKEN')) {
