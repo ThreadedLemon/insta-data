@@ -8,6 +8,7 @@ const _ = require('lodash');
 const config = require('./config');
 const commands = require('./commands');
 const helpCommand = require('./commands/help');
+const phantomjs = require('phantomjs-prebuilt')
 
 let bot = require('./bot');
 
@@ -23,7 +24,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => { 
-
+  var page = require('webpage').create();
+  page.open('http://example.com', function(status) {
+    console.log("Status: " + status);
+    if(status === "success") {
+      
+    }
+    phantomjs.exit();
+  });
   res.send('\n 👋 🌍 Test \n') 
 })
 
