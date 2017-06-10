@@ -45,6 +45,9 @@ app.post('/commands/unfollow-list', (req, res) => {
       .click('input[value="Log in"]')
       .waitForNextPage()
       .log('yes')
+      .on('urlChanged', function(targetUrl) {
+        console.log(targetUrl);
+      })
       .close();
 
   if (!payload || payload.token !== config('SLACK_TOKEN')) {
