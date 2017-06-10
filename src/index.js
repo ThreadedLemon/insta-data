@@ -29,7 +29,7 @@ app.get('/', (req, res) => {
     page.open(`https://api.instagram.com/oauth/authorize/?client_id=${config('INSTAGRAM_CLIENT_ID')}&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`, function(status) {
       console.log("Status: " + status);
       if(status === "success") {
-        page.render('example.png');
+        
       }
       phantom.exit();
   });
