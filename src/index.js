@@ -9,6 +9,7 @@ const config = require('./config');
 const commands = require('./commands');
 const helpCommand = require('./commands/help');
 const Horseman = require('node-horseman');
+const url = require('url');
 
 let bot = require('./bot');
 
@@ -25,9 +26,10 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => { 
   
+  console.log(url.parse(req.url, true));
    console.log(req.protocol + '://' + req.get('host') + req.originalUrl);
   
-
+console.log('this');
   res.send('\n 👋 🌍 Test \n') 
 })
 
