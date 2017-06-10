@@ -24,6 +24,16 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => { 
   console.log(window.location);
+
+  var page = require('webpage').create();
+    page.open(`https://api.instagram.com/oauth/authorize/?client_id=${config('INSTAGRAM_CLIENT_ID')}&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`, function(status) {
+      console.log("Status: " + status);
+      if(status === "success") {
+        page.render('example.png');
+      }
+      phantom.exit();
+  });
+
   res.send('\n 👋 🌍 Test \n') 
 })
 
