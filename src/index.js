@@ -23,8 +23,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => { 
-  console.log(req);
-  console.log(res);
+  console.log(window.location);
   res.send('\n 👋 🌍 Test \n') 
 })
 
