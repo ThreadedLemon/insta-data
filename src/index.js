@@ -23,36 +23,14 @@ if (config('PROXY_URI')) {
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(generateAccessToken);
 
-app.get('/', (req, res) => { 
-  
-  console.log(url.parse(req.url, true).hash);
-
-   console.log(req.protocol + '://' + req.get('host') + req.originalUrl);
-  
-console.log('this');
-  res.send('\n 👋 🌍 Test \n') 
-})
+app.get('/', (req, res) => { res.send('\n 👋 🌍 \n') })
 
 app.post('/commands/unfollow-list', (req, res) => {
   let payload = req.body;
 
   console.log(payload);
-
-  const horseman = new Horseman();
-
-  horseman
-      .open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
-      .on('urlChanged', function(targetUrl) {
-        console.log(targetUrl)
-      })
-      .value('input[name="username"]', 'integrationuser')
-      .value('input[name="password"]', 'Ub5pzn79Ej')
-      .click('input[value="Log in"]')
-      .waitForNextPage()
-      .log('yes')
-      
-      .close();
 
   if (!payload || payload.token !== config('SLACK_TOKEN')) {
     let err = '✋  Insta—what? An invalid slash token was provided\n' +
@@ -74,3 +52,25 @@ app.listen(config('PORT'), (err) => {
 
   console.log(`\n📷  Insta-Data LIVES on PORT ${config('PORT')} 📷`);
 });
+
+/**
+ * Generates an Instagram access token based on the configured integration user.
+ * 
+ * @author    Slade Solobay
+ * @date      2017-06-10
+ */
+let generateAccessToken = function(res, req, next) {
+  let horseman = new Horseman();
+
+  horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
+      .on('urlChanged', (targetUrl) => {
+        console.log(url.parse(targetUrl).hash);
+      })
+      .value('input[name="username"]', 'integrationuser')
+      .value('input[name="password"]', 'Ub5pzn79Ej')
+      .click('input[value="Log in"]')
+      .waitForNextPage()      
+      .close();
+
+  next();
+};
