@@ -35,7 +35,7 @@ app.post('/commands/unfollow-list', (req, res) => {
   let payload = req.body;
 
   console.log(payload);
-  config('INSTAGRAM_TOKEN', payload.token);
+  config('SLACK_TOKEN', payload.token);
   slackCallouts.message('Generating report...', payload.channel_id)
 
   if (!payload || payload.token !== config('SLACK_TOKEN')) {
