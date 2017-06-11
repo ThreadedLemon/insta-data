@@ -26,7 +26,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => { 
   
-  console.log(url.parse(req.url, true));
+  console.log(url.parse(req.url, true).hash);
+
    console.log(req.protocol + '://' + req.get('host') + req.originalUrl);
   
 console.log('this');
