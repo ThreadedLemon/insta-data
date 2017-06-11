@@ -1,4 +1,9 @@
-
+/**
+ * Simple Express server for handling Slack / commands 
+ * 
+ * @author    Slade Solobay
+ * @date      2017-06-10 
+ */
 'use strict'
 
 const express = require('express');
@@ -19,6 +24,28 @@ if (config('PROXY_URI')) {
   app.use(proxy(config('PROXY_URI'), {
     forwardPath: (req, res) => { return require('url').parse(req.url).path }
   }))
+};
+
+/**
+ * Generates an Instagram access token based on the configured integration user.
+ * 
+ * @author    Slade Solobay
+ * @date      2017-06-10
+ */
+let generateAccessToken = function(res, req, next) {
+  let horseman = new Horseman();
+
+  horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
+      .on('urlChanged', (targetUrl) => {
+        console.log(url.parse(targetUrl).hash);
+      })
+      .value('input[name="username"]', 'integrationuser')
+      .value('input[name="password"]', 'Ub5pzn79Ej')
+      .click('input[value="Log in"]')
+      .waitForNextPage()      
+      .close();
+
+  next();
 };
 
 app.use(bodyParser.json());
@@ -52,25 +79,3 @@ app.listen(config('PORT'), (err) => {
 
   console.log(`\n📷  Insta-Data LIVES on PORT ${config('PORT')} 📷`);
 });
-
-/**
- * Generates an Instagram access token based on the configured integration user.
- * 
- * @author    Slade Solobay
- * @date      2017-06-10
- */
-let generateAccessToken = function(res, req, next) {
-  let horseman = new Horseman();
-
-  horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
-      .on('urlChanged', (targetUrl) => {
-        console.log(url.parse(targetUrl).hash);
-      })
-      .value('input[name="username"]', 'integrationuser')
-      .value('input[name="password"]', 'Ub5pzn79Ej')
-      .click('input[value="Log in"]')
-      .waitForNextPage()      
-      .close();
-
-  next();
-};
