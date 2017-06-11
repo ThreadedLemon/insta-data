@@ -19,8 +19,12 @@ const config = {
   ICON_EMOJI: ':camera:'
 }
 
-module.exports = (key) => {
+module.exports = (key, value) => {
   if (!key) return config
 
-  return config[key]
+  if (!value) {
+    return config[key]
+  } else {
+    config[key] = value;
+  }
 }
