@@ -31,20 +31,21 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => { res.send('\n 👋 🌍 \n') })
 
-app.post('/commands/unfollow-list', (req, res) => {
+app.post('/commands/help', (req, res) => {
   let payload = req.body;
 
   console.log(payload);
-  config('SLACK_TOKEN', payload.token);
-  slackCallouts.message('Generating report...', payload.channel_id)
-
-  if (!payload || payload.token !== config('SLACK_TOKEN')) {
-    let err = '✋  Insta—what? An invalid Slack token was provided\n' +
+  
+  if (!payload || !payload.token) {
+    let err = '✋  Insta—what? No Slack token was provided\n' +
               '   Is your Slack token correctly configured?';
     console.log(err);
     res.status(401).end(err);
     return;
   }
+
+  config('SLACK_TOKEN', payload.token);
+  slackCallouts.message('Generating report...', payload.channel_id);
 
   let cmd = _.reduce(commands, (a, cmd) => {
     return payload.text.match(cmd.pattern) ? cmd : a
