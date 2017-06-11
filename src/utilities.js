@@ -14,7 +14,7 @@ module.exports = {
      * @date      2017-06-10
      */
     generateAccessToken: function() {
-        let horseman = new Horseman();
+        var horseman = new Horseman();
 
         horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
             .on('urlChanged', (targetUrl) => {
