@@ -13,6 +13,7 @@ const _ = require('lodash');
 const config = require('./config');
 const commands = require('./commands');
 const helpCommand = require('./commands/help');
+const slackCallouts = require('./slack-callouts');
 const utilities = require('./utilities');
 
 let bot = require('./bot');
@@ -34,10 +35,12 @@ app.post('/commands/unfollow-list', (req, res) => {
   let payload = req.body;
 
   console.log(payload);
+  config('INSTAGRAM_TOKEN', payload.token);
+  slackCallouts.message('Generating report...', payload.channel_id)
 
   if (!payload || payload.token !== config('SLACK_TOKEN')) {
-    let err = '✋  Insta—what? An invalid slash token was provided\n' +
-              '   Is your Slack slash token correctly configured?';
+    let err = '✋  Insta—what? An invalid Slack token was provided\n' +
+              '   Is your Slack token correctly configured?';
     console.log(err);
     res.status(401).end(err);
     return;
