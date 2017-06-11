@@ -5,6 +5,7 @@
  * @date      2017-06-10 
  */
 const Horseman = require('node-horseman');
+const url = require('url');
 
 module.exports = {
     /**
