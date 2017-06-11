@@ -14,7 +14,7 @@ let attachments = [
   {
     title: 'Insta-Data will help report on user Instagram engagement',
     color: '#2FA44F',
-    text: '`/instadata engagement-report` returns an engagement report against user and Instagram posts within a given channel \n`',
+    text: '`/engagement-report` returns an engagement report against user and Instagram posts within a given channel \n',
     mrkdwn_in: ['text']
   },
   {
