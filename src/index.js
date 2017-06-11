@@ -13,8 +13,7 @@ const _ = require('lodash');
 const config = require('./config');
 const commands = require('./commands');
 const helpCommand = require('./commands/help');
-const Horseman = require('node-horseman');
-const url = require('url');
+const utilities = require('./utilities');
 
 let bot = require('./bot');
 
@@ -26,31 +25,8 @@ if (config('PROXY_URI')) {
   }))
 };
 
-/**
- * Generates an Instagram access token based on the configured integration user.
- * 
- * @author    Slade Solobay
- * @date      2017-06-10
- */
-let generateAccessToken = function(res, req, next) {
-  let horseman = new Horseman();
-
-  horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
-      .on('urlChanged', (targetUrl) => {
-        console.log(url.parse(targetUrl).hash);
-      })
-      .value('input[name="username"]', 'integrationuser')
-      .value('input[name="password"]', 'Ub5pzn79Ej')
-      .click('input[value="Log in"]')
-      .waitForNextPage()      
-      .close();
-
-  next();
-};
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(generateAccessToken);
 
 app.get('/', (req, res) => { res.send('\n 👋 🌍 \n') })
 
@@ -77,5 +53,6 @@ app.post('/commands/unfollow-list', (req, res) => {
 app.listen(config('PORT'), (err) => {
   if (err) throw err
 
+  utilities.generateAccessToken();
   console.log(`\n📷  Insta-Data LIVES on PORT ${config('PORT')} 📷`);
 });
