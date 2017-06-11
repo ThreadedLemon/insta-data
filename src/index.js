@@ -43,14 +43,15 @@ app.post('/commands/unfollow-list', (req, res) => {
 
   horseman
       .open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
+      .on('urlChanged', function(targetUrl) {
+        console.log(targetUrl)
+      })
       .value('input[name="username"]', 'integrationuser')
       .value('input[name="password"]', 'Ub5pzn79Ej')
       .click('input[value="Log in"]')
       .waitForNextPage()
       .log('yes')
-      .on('urlChanged', function(targetUrl) {
-        console.log(targetUrl);
-      })
+      
       .close();
 
   if (!payload || payload.token !== config('SLACK_TOKEN')) {
