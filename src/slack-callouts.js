@@ -1,14 +1,15 @@
 /**
- * Various Slack callout function used throughout the app.
+ * Various Slack API callout function used throughout the app.
  * 
  * @author    Slade Solobay
  * @date      2017-06-10 
  */
 'use strict'
 
-const slack = require('slack')
-const _ = require('lodash')
-const config = require('./config')
+const slack = require('slack');
+const _ = require('lodash');
+const config = require('./config');
+const instagramCallouts = require('./instagram-callouts');
 
 module.exports = {
     message: function(msg, channel) {
@@ -27,6 +28,18 @@ module.exports = {
             let txt = _.truncate(data.message.text);
 
             console.log(`Message sent: "${txt}"`);
+        });
+    },
+
+    getHistory: function(channel, limit) {
+        slack.channels.history({
+            token: 'xoxp-196638845590-195928722629-195884368228-83cc2a6ddce12b68d0352e1eb0da96a5', 
+            channel: channel
+        }, (err, data) => {
+            console.log(err);
+            if (err) throw err;
+
+            console.log(data);
         });
     }
 };

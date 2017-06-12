@@ -14,7 +14,7 @@ const config = require('./config');
 const commands = require('./commands');
 const helpCommand = require('./commands/help');
 const slackCallouts = require('./slack-callouts');
-const utilities = require('./utilities');
+const instagramCallouts = require('./instagram-callouts');
 
 let bot = require('./bot');
 
@@ -36,22 +36,33 @@ app.post('/commands/help', (req, res) => {
 
   console.log(payload);
   
-  if (!payload || !payload.token) {
-    let err = '✋  Insta—what? No Slack token was provided\n' +
+  if (!payload || payload.token !== config('SLACK_VERIFICATION_TOKEN')) {
+    let err = '✋  Insta—what? An incorrect Slack verification token was provided\n' +
               '   Is your Slack token correctly configured?';
     console.log(err);
     res.status(401).end(err);
     return;
   }
 
-  config('SLACK_TOKEN', payload.token);
-  slackCallouts.message('Generating report...', payload.channel_id);
-
   let cmd = _.reduce(commands, (a, cmd) => {
     return payload.text.match(cmd.pattern) ? cmd : a
   }, helpCommand);
 
   cmd.handler(payload, res);
+});
+
+app.post('/commands/engagement', (req, res) => {
+  let payload = req.body;
+  
+  // if (!payload || payload.token !== config('SLACK_VERIFICATION_TOKEN')) {
+  //   let err = '✋  Insta—what? An incorrect Slack verification token was provided\n' +
+  //             '   Is your Slack token correctly configured?';
+  //   console.log(err);
+  //   res.status(401).end(err);
+  //   return;
+  // }
+
+  slackCallouts.message('Generating report...', payload.channel_id);
 });
 
 app.listen(config('PORT'), (err) => {
