@@ -18,7 +18,7 @@ const instagramCallouts = require('./instagram-callouts');
  * @author    Slade Solobay
  * @date      2017-06-10 
  */
-const processShortCodes = (messages) => {
+function processShortCodes(messages) {
   let shortcodes = [];
 
   for(let message of messages) {
