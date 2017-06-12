@@ -11,6 +11,25 @@ const _ = require('lodash');
 const config = require('./config');
 const instagramCallouts = require('./instagram-callouts');
 
+/**
+ * Process an array of messages from a given Slack channel and find Instagram 
+ * shortcodes. 
+ * 
+ * @author    Slade Solobay
+ * @date      2017-06-10 
+ */
+const processShortCodes = (messages) => {
+  let shortcodes = [];
+
+  for(let message of messages) {
+      let regexResult = message.text.match(/<https:\/\/www.instagram.com\/p\/(.*)\/>/);
+      if (message.type === 'text' && regexResult)
+        shortcodes.push(regexResult[1]);
+  }
+
+  return shortcodes;
+}
+
 module.exports = {
     message: function(msg, channel) {
         if (!msg) return;
@@ -35,8 +54,8 @@ module.exports = {
         }, (err, data) => {
             console.log(err);
             if (err) throw err;
-
-            console.log(data);
+            console.log(processShortCodes(data));
         });
     }
 };
+
