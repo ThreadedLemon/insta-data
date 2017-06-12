@@ -66,8 +66,7 @@ app.post('/commands/engagement', (req, res) => {
   slackCallouts.message('Generating report...', payload.channel_id);
   slackCallouts.getHistory(payload.channel_id);
 
-  res.set('content-type', 'application/json');
-  res.status(200);
+  res.send(200);
   return;
 });
 
