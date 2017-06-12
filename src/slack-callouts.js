@@ -23,6 +23,7 @@ function processShortCodes(data) {
   
   if (data && data.messages)
     for(let message of data.messages) {
+        console.log(message);
         let regexResult = message.text.match(/<https:\/\/www.instagram.com\/p\/(.*)\/>/);
         if (message.type === 'text' && regexResult)
             shortcodes.push(regexResult[1]);
@@ -53,7 +54,6 @@ module.exports = {
             token: 'xoxp-196638845590-195928722629-195884368228-83cc2a6ddce12b68d0352e1eb0da96a5', 
             channel: channel
         }, (err, data) => {
-            console.log(err);
             if (err) throw err;
             console.log(processShortCodes(data));
         });
