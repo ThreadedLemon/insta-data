@@ -18,14 +18,15 @@ const instagramCallouts = require('./instagram-callouts');
  * @author    Slade Solobay
  * @date      2017-06-10 
  */
-function processShortCodes(messages) {
+function processShortCodes(data) {
   let shortcodes = [];
-console.log(messages);
-//   messages.forEach((message) => {
-//       let regexResult = message.text.match(/<https:\/\/www.instagram.com\/p\/(.*)\/>/);
-//       if (message.type === 'text' && regexResult)
-//         shortcodes.push(regexResult[1]);
-//   });
+  
+  if (data && data.messages)
+    for(let message of data.messages) {
+        let regexResult = message.text.match(/<https:\/\/www.instagram.com\/p\/(.*)\/>/);
+        if (message.type === 'text' && regexResult)
+            shortcodes.push(regexResult[1]);
+    }
 
   return shortcodes;
 }
