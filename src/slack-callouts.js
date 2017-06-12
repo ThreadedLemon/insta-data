@@ -21,11 +21,11 @@ const instagramCallouts = require('./instagram-callouts');
 function processShortCodes(messages) {
   let shortcodes = [];
 
-  for(let message of messages) {
+  messages.forEach((message) => {
       let regexResult = message.text.match(/<https:\/\/www.instagram.com\/p\/(.*)\/>/);
       if (message.type === 'text' && regexResult)
         shortcodes.push(regexResult[1]);
-  }
+  });
 
   return shortcodes;
 }
