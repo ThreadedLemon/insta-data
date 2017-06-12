@@ -22,11 +22,8 @@ module.exports = {
             username: 'Insta-Data',
             text: msg
         }, (err, data) => {
-            console.log(err);
             if (err) throw err;
-
             let txt = _.truncate(data.message.text);
-
             console.log(`Message sent: "${txt}"`);
         });
     },
