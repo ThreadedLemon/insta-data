@@ -23,8 +23,9 @@ function processShortCodes(data) {
   
   if (data && data.messages)
     for(let message of data.messages) {
-        console.log(message);
+        console.log(message.text);
         let regexResult = message.text.match(/<https:\/\/www.instagram.com\/p\/(.*)\/>/);
+        console.log(regexResult);
         if (message.type === 'text' && regexResult)
             shortcodes.push(regexResult[1]);
     }
