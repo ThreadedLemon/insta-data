@@ -68,6 +68,6 @@ app.post('/commands/engagement', (req, res) => {
 app.listen(config('PORT'), (err) => {
   if (err) throw err
 
-  utilities.generateAccessToken();
+  instagramCallouts.generateAccessToken();
   console.log(`\n📷  Insta-Data LIVES on PORT ${config('PORT')} 📷`);
 });
