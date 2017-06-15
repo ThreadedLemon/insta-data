@@ -43,7 +43,7 @@ module.exports = {
         // });
 
         instagram.mediaByShortcode({
-            shortcode: shortcodes[0]
+            shortcode: 'BU5UimiAGVs'
         }, (err, data) => {
             console.log(err);
             if (err) throw err;
