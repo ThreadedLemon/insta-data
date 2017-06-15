@@ -74,8 +74,10 @@ module.exports = {
 
         instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
            let data = result.data;
+           console.log(result);
            if(data) {
                mediaMap[data.Id] = { likes: [], comments: []};
+               console.log(data)
                getLikes(data.Id);
                getComments(data.Id);
            }
