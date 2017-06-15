@@ -67,7 +67,7 @@ module.exports = {
         //     console.log(values)
         // });
 
-        instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
+        instagram.mediaByShortcode(shortcodes[0]).then((result) => {
            var data = result.data;
 
            if(data) {
