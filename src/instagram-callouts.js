@@ -58,6 +58,7 @@ module.exports = {
 
         horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
             .on('urlChanged', (targetUrl) => {
+                console.log(url.parse(targetUrl).hash.slice(14));
                 instagram = new Instagram(url.parse(targetUrl).hash.slice(14))
             })
             .value('input[name="username"]', 'integrationuser')
