@@ -58,7 +58,7 @@ module.exports = {
 
             let shortcodes = processShortCodes(data)
             if (shortcodes.length > 0) {
-                instagramCallouts.getMediaIds();
+                instagramCallouts.getMediaIds(shortcodes);
             }
         });
     }

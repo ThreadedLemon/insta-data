@@ -33,14 +33,14 @@ module.exports = {
             .click('input[value="Log in"]').waitForNextPage().close();
     },
     getMediaIds: function(shortcodes) {
-        let promises = []
-        for (let shortcode in shortcodes) {
-            promises.push(instagram.mediaByShortcode({shortcode: shortcode}));
-        }
+        // let promises = []
+        // for (let shortcode in shortcodes) {
+        //     promises.push(instagram.mediaByShortcode({shortcode: shortcode}));
+        // }
         
-        Promise.all(promises).then(values => { 
-            console.log(values)
-        });
+        // Promise.all(promises).then(values => { 
+        //     console.log(values)
+        // });
 
         instagram.mediaByShortcode({
             shortcode: shortcodes[0]
