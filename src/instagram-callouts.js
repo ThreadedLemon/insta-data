@@ -16,7 +16,7 @@ var mediaMap = {}; // Map likes and comments to media Id
 
 function getLikes(mediaId) {
     console.log('here');
-    instagram.mediaLikes(mediaId).then((result => {
+    instagram.mediaLikes('1529343887234065772_31251727').then((result => {
         var data = result.data;
 
         if (data) {
