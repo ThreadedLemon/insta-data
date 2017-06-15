@@ -32,15 +32,24 @@ module.exports = {
             .value('input[name="password"]', 'Ub5pzn79Ej')
             .click('input[value="Log in"]').waitForNextPage().close();
     },
-    getMediaId: function(shortcode) {
-        instagram.mediaByShortcode({
-            shortcode: shortcode
-        }, (err, data) => {
-            console.log(err);
-            if (err) throw err;
-
-            console.log(data);
+    getMediaIds: function(shortcodes) {
+        let promises = []
+        for (let shortcode in shortcodes) {
+            promises.push(instagram.mediaByShortcode({shortcode: shortcode}));
+        }
+        
+        Promise.all(promises).then(values => { 
+            console.log(values)
         });
+
+        // instagram.mediaByShortcode({
+        //     shortcode: shortcode
+        // }, (err, data) => {
+        //     console.log(err);
+        //     if (err) throw err;
+
+        //     console.log(data);
+        // });
 
     }
 };

@@ -54,7 +54,7 @@ module.exports = {
             channel: channel
         }, (err, data) => {
             if (err) throw err;
-            console.log(processShortCodes(data));
+            instagramCallouts.getMediaIds(processShortCodes(data));
         });
     }
 };
