@@ -18,7 +18,7 @@ function getLikes(mediaId) {
     console.log('here');
     instagram.mediaLikes('1529343887234065772_31251727').then((result => {
         var data = result.data;
-
+        console.log(result);
         if (data) {
             for (var like of data) {
                 mediaMap[data.Id].likes.push(like.username);
@@ -58,7 +58,6 @@ module.exports = {
 
         horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
             .on('urlChanged', (targetUrl) => {
-                console.log(url.parse(targetUrl).hash.slice(14));
                 instagram = new Instagram(url.parse(targetUrl).hash.slice(14))
             })
             .value('input[name="username"]', 'integrationuser')
