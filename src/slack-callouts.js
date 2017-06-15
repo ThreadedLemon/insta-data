@@ -55,7 +55,11 @@ module.exports = {
         }, (err, data) => {
             if (err) throw err;
             console.log(data);
-            instagramCallouts.getMediaIds(processShortCodes(data));
+
+            let shortcodes = processShortCodes(data)
+            if (shortcodes.length > 0) {
+                instagramCallouts.getMediaIds();
+            }
         });
     }
 };
