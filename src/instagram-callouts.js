@@ -78,10 +78,10 @@ module.exports = {
            var data = result.data;
 
            if(data) {
-               mediaMap[data.Id] = { likes: [], comments: []};
+               mediaMap[data.id] = { likes: [], comments: []};
                console.log(mediaMap);
-               getLikes(data.Id);
-               getComments(data.Id);
+               getLikes(data.id);
+               getComments(data.id);
            }
         }); 
     }
