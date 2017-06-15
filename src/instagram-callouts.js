@@ -19,7 +19,7 @@ function getLikes(mediaId) {
         var data = result.data;
         if (data) {
             for (var like of data) {
-                mediaMap[mediaId].likes.push(like.username);
+                mediaMap[mediaId].likes.add(like.username);
             }
         }
     }));
@@ -31,7 +31,7 @@ function getComments(mediaId) {
         if (data) {
             for (var comment of data) {
                 console.log(comment);
-                mediaMap[mediaId].comments.push(comment.from.username);
+                mediaMap[mediaId].comments.add(comment.from.username);
             }
         }
     }));
@@ -71,7 +71,7 @@ module.exports = {
            var data = result.data;
 
            if(data) {
-               mediaMap[data.id] = { likes: [], comments: []};
+               mediaMap[data.id] = { likes: new Set(), comments: new Set()};
                console.log(mediaMap);
                getLikes(data.id);
                getComments(data.id);
