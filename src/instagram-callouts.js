@@ -32,9 +32,9 @@ function getComments(mediaId) {
             for (var comment of data) {
                 mediaMap[mediaId].comments.add(comment.from.username);
             }
-        }
 
-        console.log(mediaMap);
+            console.log(mediaMap);
+        }
     }));
 }
 
@@ -73,7 +73,6 @@ module.exports = {
 
            if(data) {
                mediaMap[data.id] = { likes: new Set(), comments: new Set()};
-               console.log(mediaMap);
                getLikes(data.id);
                getComments(data.id);
            }
