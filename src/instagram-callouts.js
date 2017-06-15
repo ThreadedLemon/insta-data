@@ -42,14 +42,14 @@ module.exports = {
             console.log(values)
         });
 
-        // instagram.mediaByShortcode({
-        //     shortcode: shortcode
-        // }, (err, data) => {
-        //     console.log(err);
-        //     if (err) throw err;
+        instagram.mediaByShortcode({
+            shortcode: shortcodes[0]
+        }, (err, data) => {
+            console.log(err);
+            if (err) throw err;
 
-        //     console.log(data);
-        // });
+            console.log(data);
+        });
 
     }
 };
