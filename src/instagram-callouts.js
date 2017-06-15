@@ -33,17 +33,17 @@ module.exports = {
             .click('input[value="Log in"]').waitForNextPage().close();
     },
     getMediaIds: function(shortcodes) {
-        // let promises = []
-        // for (let shortcode in shortcodes) {
-        //     promises.push(instagram.mediaByShortcode({shortcode: shortcode}));
-        // }
+        let promises = []
+        for (let shortcode in shortcodes) {
+            promises.push(instagram.mediaByShortcode(shortcode));
+        }
         
-        // Promise.all(promises).then(values => { 
-        //     console.log(values)
-        // });
-
-        instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
-            console.log(result);
+        Promise.all(promises).then(values => { 
+            console.log(values)
         });
+
+        // instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
+        //    console.log(result);
+        // }); 
     }
 };
