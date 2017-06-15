@@ -16,12 +16,12 @@ var mediaMap = {}; // Map likes and comments to media Id
 
 function getLikes(mediaId) {
     console.log('here');
-    instagram.mediaLikes('1529343887234065772_31251727').then((result => {
+    instagram.mediaLikes(mediaId).then((result => {
         var data = result.data;
         console.log(result);
         if (data) {
             for (var like of data) {
-                mediaMap[data.Id].likes.push(like.username);
+                mediaMap[mediaId].likes.push(like.username);
             }
         }
 
@@ -36,7 +36,7 @@ function getComments(mediaId) {
 
         if (data) {
             for (var comment of data) {
-                mediaMap[data.Id].comments.push(comment.from.username);
+                mediaMap[data.id].comments.push(comment.from.username);
             }
         }
 
