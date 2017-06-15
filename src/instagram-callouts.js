@@ -15,32 +15,25 @@ var instagram;
 var mediaMap = {}; // Map likes and comments to media Id
 
 function getLikes(mediaId) {
-    console.log('here');
     instagram.mediaLikes(mediaId).then((result => {
         var data = result.data;
-        console.log(result);
         if (data) {
             for (var like of data) {
                 mediaMap[mediaId].likes.push(like.username);
             }
         }
-
-        console.log(mediaMap);
     }));
 }
 
 function getComments(mediaId) {
-    consol.log('there');
     instagram.mediaComments(mediaId).then((result => {
         var data = result.data;
-
         if (data) {
             for (var comment of data) {
-                mediaMap[data.id].comments.push(comment.from.username);
+                console.log(comment);
+                mediaMap[mediaId].comments.push(comment.from.username);
             }
         }
-
-        console.log(mediaMap);
     }));
 }
 
