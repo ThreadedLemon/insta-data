@@ -54,7 +54,6 @@ module.exports = {
             channel: channel
         }, (err, data) => {
             if (err) throw err;
-            console.log(data);
 
             let shortcodes = processShortCodes(data)
             if (shortcodes.length > 0) {

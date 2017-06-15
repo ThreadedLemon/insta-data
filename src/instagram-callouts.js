@@ -14,6 +14,35 @@ const Instagram = require('instagram-api');
 let instagram;
 let mediaMap = {}; // Map likes and comments to media Id
 
+function getLikes(mediaId) {
+    instagram.mediaLikes(mediaId).then((result => {
+        let data = result.data;
+
+        if (data) {
+            for (let like of data) {
+                mediaMap[data.Id].likes.push(like.username);
+            }
+        }
+
+        console.log(mediaMap);
+    }));
+}
+
+function getComments(mediaId) {
+    instagram.mediaComments(mediaId).then((result => {
+        let data = result.data;
+
+        if (data) {
+            for (let comment of data) {
+                mediaMap[data.Id].comments.push(comment.from.username);
+            }
+        }
+
+        console.log(mediaMap);
+    }));
+}
+
+
 module.exports = {
     /**
      * Generates an Instagram access token based on the configuration integration user. Utilizes 
@@ -47,35 +76,9 @@ module.exports = {
            let data = result.data;
            if(data) {
                mediaMap[data.Id] = { likes: [], comments: []};
-               this.getLikes(data.Id);
-               this.getComments(data.Id);
+               getLikes(data.Id);
+               getComments(data.Id);
            }
         }); 
-    },
-    getLikes: function(mediaId) {
-        instagram.mediaLikes(mediaId).then((result => {
-            let data = result.data;
-
-            if (data) {
-                for (let like of data) {
-                    mediaMap[data.Id].likes.push(like.username);
-                }
-            }
-
-            console.log(mediaMap);
-        }));
-    },
-    getComments: function(mediaId) {
-        instagram.mediaComments(mediaId).then((result => {
-            let data = result.data;
-
-            if (data) {
-                for (let comment of data) {
-                    mediaMap[data.Id].comments.push(comment.from.username);
-                }
-            }
-
-            console.log(mediaMap);
-        }));
     }
 };
