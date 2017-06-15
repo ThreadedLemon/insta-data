@@ -11,7 +11,8 @@ const Horseman = require('node-horseman');
 const url = require('url');
 const Instagram = require('instagram-api');
 
-var instagram;
+let instagram;
+let mediaMap = {}; // Map likes and comments to media Id
 
 module.exports = {
     /**
@@ -22,7 +23,7 @@ module.exports = {
      * @date      2017-06-10
      */
     generateAccessToken: function() {
-        var horseman = new Horseman();
+        let horseman = new Horseman();
 
         horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
             .on('urlChanged', (targetUrl) => {
@@ -34,16 +35,47 @@ module.exports = {
     },
     getMediaIds: function(shortcodes) {
         let promises = []
-        for (let shortcode in shortcodes) {
-            promises.push(instagram.mediaByShortcode(shortcode));
-        }
+        // for (let shortcode in shortcodes) {
+        //     promises.push(instagram.mediaByShortcode(shortcode));
+        // }
         
-        Promise.all(promises).then(values => { 
-            console.log(values)
-        });
+        // Promise.all(promises).then(values => { 
+        //     console.log(values)
+        // });
 
-        // instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
-        //    console.log(result);
-        // }); 
+        instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
+           let data = result.data;
+           if(data) {
+               mediaMap[data.Id] = { likes: [], comments: []};
+               this.getLikes(data.Id);
+               this.getComments(data.Id);
+           }
+        }); 
+    },
+    getLikes: function(mediaId) {
+        instagram.mediaLikes(mediaId).then((result => {
+            let data = result.data;
+
+            if (data) {
+                for (let like of data) {
+                    mediaMap[data.Id].likes.push(like.username);
+                }
+            }
+
+            console.log(mediaMap);
+        }));
+    },
+    getComments: function(mediaId) {
+        instagram.mediaComments(mediaId).then((result => {
+            let data = result.data;
+
+            if (data) {
+                for (let comment of data) {
+                    mediaMap[data.Id].comments.push(comment.from.username);
+                }
+            }
+
+            console.log(mediaMap);
+        }));
     }
 };
