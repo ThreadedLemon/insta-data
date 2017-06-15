@@ -15,6 +15,7 @@ var instagram;
 var mediaMap = {}; // Map likes and comments to media Id
 
 function getLikes(mediaId) {
+    console.log('here');
     instagram.mediaLikes(mediaId).then((result => {
         var data = result.data;
 
@@ -29,6 +30,7 @@ function getLikes(mediaId) {
 }
 
 function getComments(mediaId) {
+    consol.log('there');
     instagram.mediaComments(mediaId).then((result => {
         var data = result.data;
 
@@ -74,10 +76,10 @@ module.exports = {
 
         instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
            var data = result.data;
-           console.log(result);
+
            if(data) {
                mediaMap[data.Id] = { likes: [], comments: []};
-               console.log(data)
+               console.log(mediaMap);
                getLikes(data.Id);
                getComments(data.Id);
            }
