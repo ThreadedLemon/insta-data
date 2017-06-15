@@ -42,14 +42,8 @@ module.exports = {
         //     console.log(values)
         // });
 
-        instagram.mediaByShortcode({
-            shortcode: 'BU5UimiAGVs'
-        }, (err, data) => {
-            console.log(err);
-            if (err) throw err;
-
-            console.log(data);
+        instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
+            console.log(result);
         });
-
     }
 };
