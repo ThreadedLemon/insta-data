@@ -11,15 +11,15 @@ const Horseman = require('node-horseman');
 const url = require('url');
 const Instagram = require('instagram-api');
 
-let instagram;
-let mediaMap = {}; // Map likes and comments to media Id
+var instagram;
+var mediaMap = {}; // Map likes and comments to media Id
 
 function getLikes(mediaId) {
     instagram.mediaLikes(mediaId).then((result => {
-        let data = result.data;
+        var data = result.data;
 
         if (data) {
-            for (let like of data) {
+            for (var like of data) {
                 mediaMap[data.Id].likes.push(like.username);
             }
         }
@@ -30,10 +30,10 @@ function getLikes(mediaId) {
 
 function getComments(mediaId) {
     instagram.mediaComments(mediaId).then((result => {
-        let data = result.data;
+        var data = result.data;
 
         if (data) {
-            for (let comment of data) {
+            for (var comment of data) {
                 mediaMap[data.Id].comments.push(comment.from.username);
             }
         }
@@ -52,7 +52,7 @@ module.exports = {
      * @date      2017-06-10
      */
     generateAccessToken: function() {
-        let horseman = new Horseman();
+        var horseman = new Horseman();
 
         horseman.open(`https://api.instagram.com/oauth/authorize/?client_id=eb2a475895d74b7fb0611dfd918e99c2&redirect_uri=https://insta-data.herokuapp.com/&response_type=token`)
             .on('urlChanged', (targetUrl) => {
@@ -63,7 +63,7 @@ module.exports = {
             .click('input[value="Log in"]').waitForNextPage().close();
     },
     getMediaIds: function(shortcodes) {
-        let promises = []
+        var promises = []
         // for (let shortcode in shortcodes) {
         //     promises.push(instagram.mediaByShortcode(shortcode));
         // }
@@ -73,7 +73,7 @@ module.exports = {
         // });
 
         instagram.mediaByShortcode('BU5UimiAGVs').then((result) => {
-           let data = result.data;
+           var data = result.data;
            console.log(result);
            if(data) {
                mediaMap[data.Id] = { likes: [], comments: []};
