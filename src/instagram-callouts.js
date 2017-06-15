@@ -30,10 +30,11 @@ function getComments(mediaId) {
         var data = result.data;
         if (data) {
             for (var comment of data) {
-                console.log(comment);
                 mediaMap[mediaId].comments.add(comment.from.username);
             }
         }
+
+        console.log(mediaMap);
     }));
 }
 
