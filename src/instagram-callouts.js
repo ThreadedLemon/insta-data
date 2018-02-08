@@ -54,8 +54,8 @@ module.exports = {
             .on('urlChanged', (targetUrl) => {
                 instagram = new Instagram(url.parse(targetUrl).hash.slice(14))
             })
-            .value('input[name="username"]', 'integrationuser')
-            .value('input[name="password"]', 'Ub5pzn79Ej')
+            .value('input[name="username"]', config.INSTAGRAM_INTEGRATION_USERNAME)
+            .value('input[name="password"]', config.INSTAGRAM_INTEGRATION_PASSWORD)
             .click('input[value="Log in"]').waitForNextPage().close();
     },
     getMediaIds: function(shortcodes) {
